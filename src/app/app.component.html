@@ -4,7 +4,7 @@
     <!-- {{ userData.value | json }}
 <hr>
     {{userModel | json}} -->
-
+      {{userData.form.valid}}
     <div class="form-group">
       <label>Name</label>
       <input type="text"  class="form-control"  name="name" required 
@@ -35,12 +35,15 @@
     </div>
 
     <div class="form-group">
-      <select  id="" class="cutom-select" [(ngModel)]="userModel.topic" name="topic">
-        <option  selected>I'm interested in</option>
-        <option value="{{topic}}" *ngFor="let topic of topics">{{ topic }}</option>
+      <select  id="" class="custom-select" [(ngModel)]="userModel.topic" name="topic"
+      #topic="ngModel" (blur)="validateTopic(topic.value)" (change)="validateTopic(topic.value)" [class.is-invalid]="topicHasError && topic.touched">
+        <option value="default">I'm interested in</option>
+        <option  *ngFor="let topic of topics">{{ topic }}</option>
       </select>
-    </div>
 
+      <small class="text-danger" [class.d-none]="!topicHasError || topic.untouched">Please choose an option</small>
+    </div>
+    
     <div class="mb-3">
       <label for="">Time Preference</label>
       <div class="form-check">
@@ -71,6 +74,6 @@
       </div>
     </div> -->
 
-    <button type="submit" class="btn btn-primary">Submit form</button>
+    <button type="submit" class="btn btn-primary" [disabled]="userData.form.invalid || topicHasError">Submit form</button>
   </form>
 </div>
