@@ -22,4 +22,8 @@ export class AppComponent {
     }
 
   }
+  onSubmit(userData)
+  {
+    console.log(userData);
+  }
 }
